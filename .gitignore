@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Environment variables (API keys — Netlify'da ayrı ayarlanır!)
+.env
+.env.local
+.env.*.local
 
 # Build output
 dist/
