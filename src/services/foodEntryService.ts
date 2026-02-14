@@ -32,7 +32,8 @@ export async function getFoodEntries(
         .from(TABLE_NAME)
         .select('*')
         .eq('user_id', userId)
-        .order('recorded_at', { ascending: false });
+        .order('recorded_at', { ascending: false })
+        .limit(1000);
 
     if (dateRange) {
         query = query

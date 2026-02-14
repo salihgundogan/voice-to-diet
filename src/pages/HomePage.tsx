@@ -119,7 +119,9 @@ export function HomePage() {
         }
     };
 
-    const todayCalories = groups.length > 0 ? (groups[0]?.totalCalories ?? 0) : 0;
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todayGroup = groups.find((g) => g.date === todayStr);
+    const todayCalories = todayGroup?.totalCalories ?? 0;
     const effectiveState = isAnalyzing ? 'processing' : state;
 
     return (
