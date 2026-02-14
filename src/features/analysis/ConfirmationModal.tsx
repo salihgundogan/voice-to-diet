@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FoodAnalysis, MealType } from '@/types';
 import { MEAL_TYPE_LABELS, MEAL_TYPE_ICONS } from '@/types';
 import { Modal } from '@/components/ui/Modal';
@@ -10,6 +10,7 @@ interface ConfirmationModalProps {
     analysis: FoodAnalysis | null;
     onConfirm: (data: FoodAnalysis) => void;
     onCancel: () => void;
+    itemCounter?: string;
 }
 
 const ALL_MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack'];
@@ -19,10 +20,14 @@ export function ConfirmationModal({
     analysis,
     onConfirm,
     onCancel,
+    itemCounter,
 }: ConfirmationModalProps) {
     const [formData, setFormData] = useState<FoodAnalysis | null>(null);
 
-    // Sync form data when analysis changes
+    // Analiz değiştiğinde form verisini sıfırla (kuyrukta sonraki yiyeceğe geçerken)
+    useEffect(() => {
+        setFormData(null);
+    }, [analysis]);
     const data = formData ?? analysis;
 
     if (!data) return null;
@@ -48,11 +53,11 @@ export function ConfirmationModal({
         <Modal
             isOpen={isOpen}
             onClose={handleCancel}
-            title="Kaydı Onayla"
+            title={itemCounter ? `Kaydı Onayla (${itemCounter})` : 'Kaydı Onayla'}
             footer={
                 <>
                     <Button variant="secondary" fullWidth onClick={handleCancel}>
-                        İptal
+                        {itemCounter ? 'Atla ⏭️' : 'İptal'}
                     </Button>
                     <Button variant="primary" fullWidth onClick={handleConfirm}>
                         ✓ Kaydet

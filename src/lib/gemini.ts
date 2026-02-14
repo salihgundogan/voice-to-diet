@@ -4,26 +4,39 @@ const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.0-flash';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRIES = 3;
 
-const SYSTEM_PROMPT = `Sen bir beslenme uzmanısın. Kullanıcının sesli kaydını analiz ederek yediği yiyeceği tespit et.
+const SYSTEM_PROMPT = `Sen bir beslenme uzmanısın. Kullanıcının sesli kaydını analiz ederek yediği YİYECEKLERİ tespit et.
 
-Yanıtını SADECE aşağıdaki JSON formatında ver, başka bir şey yazma:
-{
-  "food_name": "Yiyeceğin Türkçe adı",
-  "portion": "Porsiyon miktarı (örn: 1 porsiyon, 200g, 1 bardak)",
-  "calories": tahmini_kalori_sayısı,
-  "protein": protein_gram,
-  "carbs": karbonhidrat_gram,
-  "fat": yağ_gram,
-  "meal_type": "breakfast|lunch|dinner|snack"
-}
+ÖNEMLİ KURALLAR:
+1. Kullanıcı birden fazla yiyecek söylerse, HER BİRİ İÇİN AYRI bir JSON objesi oluştur.
+2. Yanıtını HER ZAMAN bir JSON array olarak ver, tek yiyecek olsa bile.
+3. Başka bir şey yazma, SADECE JSON array döndür.
+
+Format:
+[
+  {
+    "food_name": "Yiyeceğin Türkçe adı",
+    "portion": "Porsiyon miktarı (örn: 1 adet, 200g, 1 bardak)",
+    "calories": tahmini_kalori_sayısı,
+    "protein": protein_gram,
+    "carbs": karbonhidrat_gram,
+    "fat": yağ_gram,
+    "meal_type": "breakfast|lunch|dinner|snack"
+  }
+]
+
+Örnek: Kullanıcı "domates salatalık ve biber yedim" derse, 3 AYRI obje döndür:
+[
+  {"food_name": "Domates", "portion": "1 adet", "calories": 22, "protein": 1, "carbs": 5, "fat": 0, "meal_type": "snack"},
+  {"food_name": "Salatalık", "portion": "1 adet", "calories": 15, "protein": 1, "carbs": 3, "fat": 0, "meal_type": "snack"},
+  {"food_name": "Biber", "portion": "1 adet", "calories": 20, "protein": 1, "carbs": 4, "fat": 0, "meal_type": "snack"}
+]
 
 Öğün tipini saate göre tahmin et:
 - 06:00-10:00 → breakfast
-- 11:00-14:00 → lunch
+- 11:00-14:00 → lunch  
 - 17:00-21:00 → dinner
 - Diğer saatler → snack
 
-Eğer birden fazla yiyecek varsa, her biri için ayrı JSON döndür ve bunları bir JSON array'e koy.
 Kalori ve makro değerlerini gerçekçi tut.`;
 
 /**

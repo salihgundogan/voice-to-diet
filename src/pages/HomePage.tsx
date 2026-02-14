@@ -23,9 +23,15 @@ export function HomePage() {
 
     const [entries, setEntries] = useState<FoodEntry[]>([]);
     const [groups, setGroups] = useState<DayGroup[]>([]);
-    const [analysis, setAnalysis] = useState<FoodAnalysis | null>(null);
+
+    // Çoklu yiyecek kuyruğu
+    const [analysisQueue, setAnalysisQueue] = useState<FoodAnalysis[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+    const currentAnalysis = analysisQueue[currentIndex] ?? null;
+    const totalItems = analysisQueue.length;
 
     // Kayıtları yükle
     const loadEntries = useCallback(async () => {
@@ -55,7 +61,8 @@ export function HomePage() {
         try {
             const results = await analyzeVoiceNote(blob);
             if (results.length > 0) {
-                setAnalysis(results[0] ?? null);
+                setAnalysisQueue(results);
+                setCurrentIndex(0);
                 setIsModalOpen(true);
             }
         } catch (err) {
@@ -74,12 +81,32 @@ export function HomePage() {
                 user_id: DEMO_USER_ID,
                 recorded_at: new Date().toISOString(),
             });
-            setIsModalOpen(false);
-            setAnalysis(null);
-            await loadEntries();
+
+            // Sıradaki yiyeceğe geç
+            if (currentIndex < totalItems - 1) {
+                setCurrentIndex((prev) => prev + 1);
+            } else {
+                // Hepsi kaydedildi
+                setIsModalOpen(false);
+                setAnalysisQueue([]);
+                setCurrentIndex(0);
+                await loadEntries();
+            }
         } catch (err) {
             console.error('Kayıt eklenemedi:', err);
             alert('Kayıt eklenirken bir hata oluştu.');
+        }
+    };
+
+    const handleCancel = () => {
+        // Mevcut yiyeceği atla, sıradakine geç
+        if (currentIndex < totalItems - 1) {
+            setCurrentIndex((prev) => prev + 1);
+        } else {
+            setIsModalOpen(false);
+            setAnalysisQueue([]);
+            setCurrentIndex(0);
+            loadEntries();
         }
     };
 
@@ -130,12 +157,10 @@ export function HomePage() {
                 {/* Confirmation Modal */}
                 <ConfirmationModal
                     isOpen={isModalOpen}
-                    analysis={analysis}
+                    analysis={currentAnalysis}
                     onConfirm={handleConfirm}
-                    onCancel={() => {
-                        setIsModalOpen(false);
-                        setAnalysis(null);
-                    }}
+                    onCancel={handleCancel}
+                    itemCounter={totalItems > 1 ? `${currentIndex + 1}/${totalItems}` : undefined}
                 />
             </div>
         </PageContainer>
