@@ -1,0 +1,54 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+/* ── Summary Card ── */
+.summaryCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, rgba(212, 160, 185, 0.12), rgba(196, 181, 212, 0.12));
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+}
+
+.summaryIcon {
+    font-size: 2rem;
+}
+
+.summaryContent {
+    text-align: center;
+}
+
+.summaryCalories {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-dark);
+}
+
+.summaryLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ── Greeting ── */
+.greeting {
+    text-align: center;
+}
+
+.greetingText {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.greetingHint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+}

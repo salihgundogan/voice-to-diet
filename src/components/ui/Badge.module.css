@@ -1,0 +1,31 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.6;
+    white-space: nowrap;
+}
+
+.breakfast {
+    background: rgba(232, 200, 138, 0.25);
+    color: #9a7b2e;
+}
+
+.lunch {
+    background: rgba(167, 199, 212, 0.3);
+    color: #4a7a8c;
+}
+
+.dinner {
+    background: rgba(196, 181, 212, 0.3);
+    color: #6b5a80;
+}
+
+.snack {
+    background: rgba(181, 212, 192, 0.3);
+    color: #4a7a56;
+}

@@ -1,0 +1,118 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+}
+
+.input {
+    padding: var(--space-md) var(--space-base);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+.macroRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+.macroItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+}
+
+.macroValue {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.macroLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+}
+
+.mealTypeGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+}
+
+.mealTypeOption {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mealTypeOption:hover {
+    background: var(--color-surface-hover);
+}
+
+.mealTypeOptionActive {
+    border-color: var(--color-primary);
+    background: rgba(212, 160, 185, 0.1);
+    color: var(--color-primary-dark);
+}
+
+.calorieHighlight {
+    text-align: center;
+    padding: var(--space-base);
+    background: linear-gradient(135deg, rgba(212, 160, 185, 0.15), rgba(196, 181, 212, 0.15));
+    border-radius: var(--radius-lg);
+}
+
+.calorieNumber {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-primary-dark);
+}
+
+.calorieLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}

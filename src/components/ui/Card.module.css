@@ -1,0 +1,32 @@
+.card {
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+    transition:
+        box-shadow var(--transition-base),
+        transform var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.interactive {
+    cursor: pointer;
+}
+
+.interactive:active {
+    transform: scale(0.99);
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.glow {
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+}

@@ -1,0 +1,6 @@
+.container {
+    flex: 1;
+    padding: var(--space-lg) var(--page-padding);
+    padding-bottom: calc(var(--bottom-nav-height) + var(--space-xl));
+    animation: fadeIn var(--transition-base) ease-out;
+}
